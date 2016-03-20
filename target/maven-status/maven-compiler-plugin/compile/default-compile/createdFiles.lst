@@ -1,1 +1,9 @@
+com/euromoney/text/WordFormatter.class
+com/euromoney/text/FormattingWordCounter.class
+com/euromoney/text/EchoingWordFormatter.class
+com/euromoney/text/WordProvider.class
+com/euromoney/text/MiddleLettersMaskingFormatter.class
 com/euromoney/ConsoleContent/Program.class
+com/euromoney/text/WordCountResult.class
+com/euromoney/text/WordCounter.class
+com/euromoney/text/BasicWordProvider.class

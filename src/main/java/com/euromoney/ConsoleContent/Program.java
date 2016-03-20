@@ -2,29 +2,42 @@ package com.euromoney.ConsoleContent;
 
 import java.io.IOException;
 
+import com.euromoney.text.BasicWordProvider;
+import com.euromoney.text.EchoingWordFormatter;
+import com.euromoney.text.FormattingWordCounter;
+import com.euromoney.text.MiddleLettersMaskingFormatter;
+import com.euromoney.text.WordCountResult;
+import com.euromoney.text.WordCounter;
+import com.euromoney.text.WordFormatter;
+import com.euromoney.text.WordProvider;
+
 public class Program {
 
-	/**
-	 * Initialises the application in the
-	 * console.
-	 * 
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws IOException {
+    private static final String NEGATIVE_WORD_TEMAPLTE = "Total Number of negative words: %d";
 
- 		String[] negativeWords = {"swine","bad","nasty","horrible"};<br>
- 		String content = "The weather in Manchester in winter is bad. It rains all the time - it must be horrible for people visiting.";
+    /**
+     * Initialises the application in the console.
+     *
+     * @throws IOException
+     */
+    public static void main(final String[] args) throws IOException {
 
-		// TODO Implement your logic to analyze the text.
-		//  As first approximation the content can be considered as a sequence
-		//   of words where each word is a sequence of letters of the basic alphabet [a-z].
-		//  If usefull, you are allowed to use any java external libraries.
-		
-		System.out.println("\nScanned the text sequence: " + content + "\n");
-		System.out.println("\nTotal number of banned words: " + count + "\n");
-		System.out.println("\nPress ENTER to exit!\n");
-		System.in.read();
-		System.out.println("\nExiting Application!\n");
-	}
+        final String[] negativeWords = { "swine", "bad", "nasty", "horrible" };
+        final String content = "The weather in Manchester in winter is bad. It rains all the time - it must be horrible for people visiting.";
 
+        final boolean removeMask = args.length > 0 && args[0].equals("-d");
+
+        final WordFormatter formatter = removeMask ? new EchoingWordFormatter() : new MiddleLettersMaskingFormatter("#");
+        final WordCounter counter = new FormattingWordCounter(formatter);
+        final WordProvider provider = new BasicWordProvider(negativeWords);
+        final WordCountResult result = counter.count(provider, content);
+
+        System.out.println("Scanned the text:");
+        System.out.println(result.getInput());
+        System.out.println(String.format(NEGATIVE_WORD_TEMAPLTE, result.getCount()));
+
+        System.out.println("\nPress ENTER to exit!\n");
+        System.in.read();
+        System.out.println("\nExiting Application!\n");
+    }
 }
